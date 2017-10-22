@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 10000
-
 int main() {
+    int const N = 10000;
+    int const ADMIN = 1234;
     int pincode[N];
     int client[N];
     int pinc;
-    int const ADMIN = 1234;
-    int root = 0;
+    char root;
     
     srand(time(NULL));
     
@@ -44,18 +43,18 @@ int main() {
                 printf("%d\n", client[j]);
             }
             
-            printf("Do you want to clear(1/0) ");
-            scanf("%d", &root);
+            printf("Do you want to clear(y/n) ");
+            scanf("%s", &root);
             
-            if(root == 1){
+            if(root == 'y'){
                 for(int j = 0; j < N; j++){
                     client[j] = 0;
                     printf("%d\n", client[j]);
                 }
-                k = -1;
+                k = k - 1;
                 continue;
             } else{
-                k = -1;
+                k = k - 1;
                 continue;
             }
         }
