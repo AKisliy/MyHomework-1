@@ -7,10 +7,12 @@ class Animal
 {
     private:
         string name;
+        string kind;
+        string place;
         int age;
         int numberOfPaws;
         int health;
-        string kind;
+        bool isShow;
 
     public:
         string _name;
@@ -18,16 +20,18 @@ class Animal
         Animal (){
             name = _name;
             kind = " ";
+            place = " ";
             age = 0;
             numberOfPaws = 0;
             health = 0;
+            isShow = true;
         }
 
         void addAnimal(){
             cout << endl ;
-            cout << "Animal name:   "; 
+            cout << "Animal name:   ";
             cin >> _name;
-            cout << "kind:   "; 
+            cout << "kind:   ";
             cin >> kind;
             cout << "age:   ";
             cin >> age;
@@ -35,6 +39,14 @@ class Animal
             cin >> numberOfPaws;
             cout << "health:   ";
             cin >> health;
+            cout << "Choose where to put the animal: aviary or exhibition "<<endl;
+            cin >> place;
+            if (place == "aviary"){
+                isShow = true;
+            }
+            else{
+                isShow = false;
+            }
         }
 
         void showAnimals(){
@@ -48,8 +60,15 @@ class Animal
             cout.width (11);
             cout << numberOfPaws << "   ||";
             cout.width (11);
-            cout << health << "   |";
-            cout << endl << "==============================================================================" << endl ;
+            cout << health << "   ||";
+            cout.width (11);
+            if(isShow == true){
+                        cout << "Animal in a aviary"<< "  |";
+                    }
+                    else{
+                        cout << "Animal at the show"<< "  |";
+                    }
+            cout << endl << "====================================================================================================" << endl ;
         }
 
         void deleteAnimal(){
@@ -69,7 +88,8 @@ class Animal
             cout << "3 - age\n";
             cout << "4 - numberOfPaws\n";
             cout << "5 - health\n";
-            cout << "6 - exit to menu\n\n";
+            cout << "6 - exhibition or avail\n";
+            cout << "7 - exit to menu\n\n";
 
             do{
                 cout << "your choose:   " ;
@@ -100,8 +120,13 @@ class Animal
                         cout << "Enter new health: ";
                         cin >> health;
                         break;
+
+                    case 6:
+                        cout << "Enter new exhibition or avail: ";
+                        cin >> place;
+                        break;
                 }
-            }while(selector != 6);
+            }while(selector != 7);
 
         }
 };
@@ -125,7 +150,7 @@ int main (){
     Zoo animals[20];
 
     do{
-        cout << "1: Add animal \n" << "2: look animals\n" << "3: look information about animals\n" << "4: edit information\n" << "5: delete\n" << "6: Exit \n\n";
+        cout << "1: Add animal \n" << "2: look information about animalslook animals\n" << "3: look animals\n" << "4: edit information\n" << "5: delete\n" << "6: Exit \n\n";
 
         do{
             cout << "your choose:   " ;
@@ -147,9 +172,9 @@ int main (){
                   break;
                 }
 
-                cout << endl << "==============================================================================" << endl <<"| " ;
-                printf("%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  |");
-                cout << endl << "==============================================================================" << endl;
+                cout << endl << "====================================================================================================" << endl <<"| " ;
+                printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
+                cout << endl << "====================================================================================================" << endl;
 
                 for (short j = 0; j <= i; j++ ){
                     animals[j].showAnimals();
