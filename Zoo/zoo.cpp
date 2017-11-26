@@ -194,9 +194,9 @@ class Zoo{
 
                         for (int j = 0; j <= i; j++ ){
                             if(animals[j]._name == editAnimal){
-                                cout << endl << "==============================================================================" << endl <<"| " ;
-                                printf("%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  |");
-                                cout << endl << "==============================================================================" << endl;
+                                cout << endl << "====================================================================================================" << endl <<"| " ;
+                                printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
+                                cout << endl << "====================================================================================================" << endl;
                                 animals[j].showAnimals();
                                 animals[j].editInformationAboutAnimal();
                             }
