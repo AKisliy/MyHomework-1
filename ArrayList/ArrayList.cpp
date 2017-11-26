@@ -60,7 +60,7 @@ void ArrayList::removeSelectedItem(int index){
 
 void ArrayList::displayIntList(){
     for(int i=0; i<size; i++){
-        printf("%d", array[i]);
+        cout << array[i];
     }
     cout << endl;
 }
