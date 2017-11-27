@@ -1,92 +1,106 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
+#define INITIA_SIZE 5
 using namespace std;
 
 class ArrayList {
 private:
     int* array;
     int size;
-public:	
-    ArrayList(int init){
-        array = (int*)malloc(10*sizeof(int));
-        array[0] = init;
-        this->size = 1;
+    int allocSize;
+public:
+    ArrayList(){
+        array = new int[INITIA_SIZE];
+        size = 0;
+        allocSize = INITIA_SIZE;
     }
-    int getIndex(int index){
-        cout << array[index];
+  
+    void addToList(int item) {
+        if(size < allocSize) {
+            array[size] = item;
+            size++;
+        } else {
+            int* newArray = new int[allocSize * 2];
+            allocSize = allocSize * 2;
+            
+            for(int i = 0; i < size; i++) {
+                newArray[i] = array[i];
+            }
+            
+            delete array;
+            array = newArray;
+            array[size] = item;
+            size++;
+        }
     }
     
-    void displayIntList(){
-        for(int i=0; i<size; i++){
-            cout << array[i];
-            cout << endl;
+    void setToList(int index, int item) {
+        if(size < allocSize) {
+            size++;
+            for(int i = size - 1; i != index - 1; i--) {
+                array[i] = array[i - 1];
+            }
+            array[index] = item;
+        }
+    }
+    
+    int get(int index) {
+        cout << array[index] << endl;
+        return array[index];
+    }
+           
+    void removeSelectedItem(int index) {
+        if (index < size) {
+            while (index < size) {
+                array[index] = array[index + 1];
+                index++;
+            }
+            size--;
+        }
+    }
+    
+    void trimToSize() {
+        int* newArray = new int[size];
+        
+        for(int i = 0; i < size; i++) {
+            newArray[i] = array[i];
+        }
+        
+        delete array;
+        array = newArray;
+        
+        for(int i = 0; i < size; i++) {
+            cout << newArray[i];
+            cout << " ";
         }
         cout << endl;
     }
-    
-    void addIntList(int item){
-        int* newArray = (int*)malloc((size+1)*sizeof(int));
-        for(int i=0; i<size; i++){
-            newArray[i] = array[i];
-        }
-        
-        newArray[size] = item;
-        array = newArray;
-        size = size + 1;
-    }
-    
-    void trimToSize(int item){
-        int* newArray = (int*)malloc(item);
-        for(int i=0; i<item; i++){
-            newArray[i] = array[i];
-        }
-        
-        array = newArray;
-        size = item;
-    }
-        
-    void setIntList(int item, int index){
-        array[index] = item;
-    }
-    
-    void removeSelectedItem(int index){
-        int* newArray = (int*)malloc((size-1)*sizeof(int));
-        //From Beginning
-        for(int i=0; i<index; i++){
-            newArray[i] = array[i]; 
-        }
-        //From next Index  
-        for(int i=index; i<=size-1; i++){
-            newArray[i] = array[i+1];
-        }
-    
-        array = newArray;
-        size = size - 1;
-    }
 
+    void displayTheList() {
+        for(int i = 0; i < allocSize; i++) {
+            cout << array[i];
+            cout << " ";
+        }
+        cout << endl;
+    }
 };
 
-int main(){
-    ArrayList* list = new ArrayList(0);
-    list->addIntList(15);
-    list->addIntList(7);
-    list->addIntList(3);   
-    list->addIntList(12);   
-    list->addIntList(25);
-    list->displayIntList();
-    list->trimToSize(5);
-    list->displayIntList();
-    list->setIntList(9,0);
-    list->displayIntList();
-    list->removeSelectedItem(3);
-    list->displayIntList();
-    list->getIndex(1);
-    
-//    for(int i = 0; i <= 100; i++){
-//        list->addIntList(i);
-//    }
-//    list->displayIntList();
+int main() {
+    ArrayList* list = new ArrayList();
+    list->addToList(0);
+    list->addToList(1);
+    list->addToList(2);   
+    list->addToList(3);   
+    list->addToList(4);
+    list->addToList(5);
+    list->addToList(6);
+    list->displayTheList();
+    list->setToList(4,0);
+    list->displayTheList();
+    list->get(6);
+    list->removeSelectedItem(4);
+    list->displayTheList();
+    list->trimToSize();
     delete list;
 }
