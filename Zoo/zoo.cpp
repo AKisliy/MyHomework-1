@@ -3,34 +3,29 @@
 
 using namespace std;
 
-class Animal
-{
+class Animal{
     private:
         string name;
         string kind;
-        string place;
         int age;
         int numberOfPaws;
         int health;
         bool isShow;
 
     public:
-        string _name;
-
         Animal (){
-            name = _name;
+            name = " ";
             kind = " ";
-            place = " ";
             age = 0;
             numberOfPaws = 0;
             health = 0;
-            isShow = true;
+            isShow = false;
         }
 
-        void addAnimal(){
+        void add(){
             cout << endl ;
             cout << "Animal name:   ";
-            cin >> _name;
+            cin >> name;
             cout << "kind:   ";
             cin >> kind;
             cout << "age:   ";
@@ -39,20 +34,14 @@ class Animal
             cin >> numberOfPaws;
             cout << "health:   ";
             cin >> health;
-            cout << "Choose where to put the animal: aviary or exhibition "<<endl;
-            cin >> place;
-            if (place == "aviary"){
-                isShow = true;
-            }
-            else{
-                isShow = false;
-            }
+            cout << "Is animal at the exhibition?(1/0)"<<endl;
+            cin >> isShow;
         }
 
-        void showAnimals(){
+        void show(){
             cout <<"| ";
             cout.width (11);
-            cout << _name << "  ||";
+            cout << name << "  ||";
             cout.width (11);
             cout << kind << "  ||";
             cout.width (11);
@@ -62,170 +51,96 @@ class Animal
             cout.width (11);
             cout << health << "   ||";
             cout.width (11);
-            if(isShow == true){
-                        cout << "Animal in a aviary"<< "  |";
-                    }
-                    else{
-                        cout << "Animal at the show"<< "  |";
-                    }
+            if(isShow == 1){
+                cout<<"Animal at the show"<<endl;
+            }
+            if(isShow == 0){
+                cout<<"Animal at the aviary"<<endl;
+            }
             cout << endl << "====================================================================================================" << endl ;
-        }
-
-        void deleteAnimal(){
-            _name = " ";
-            kind = " ";
-            age = 0;
-            numberOfPaws = 0;
-            health = 0;
-        }
-
-        void editInformationAboutAnimal(){
-            int selector;
-
-            cout << "What information do you want edit: \n";
-            cout << "1 - name\n";
-            cout << "2 - kind\n";
-            cout << "3 - age\n";
-            cout << "4 - numberOfPaws\n";
-            cout << "5 - health\n";
-            cout << "6 - exhibition or avail\n";
-            cout << "7 - exit to menu\n\n";
-
-            do{
-                cout << "your choose:   " ;
-                cin >> selector;
-
-                switch(selector){
-                    case 1:
-                        cout << "Enter new name: ";
-                        cin >> _name;
-                        break;
-
-                    case 2:
-                        cout << "Enter new kind: ";
-                        cin >> kind;
-                        break;
-
-                    case 3:
-                        cout << "Enter new age: ";
-                        cin >> age;
-                        break;
-
-                    case 4:
-                        cout << "Enter new numberOfPaws: ";
-                        cin >> numberOfPaws;
-                        break;
-
-                    case 5:
-                        cout << "Enter new health: ";
-                        cin >> health;
-                        break;
-
-                    case 6:
-                        cout << "Enter new exhibition or avail: ";
-                        cin >> place;
-                        break;
-                }
-            }while(selector != 7);
-
         }
 };
 
-class Zoo{
+class Zoo : public Animal{
     private:
-        int selector;
-        int i = -1;
-        string deleteAnimal;
-        string editAnimal;
-        Animal animals[20];
+        Animal arrayAnimals[50];
+        int numberOfAnimals;
+        int deleteIndexOfAnimal;
     public:
+        Zoo(){
+            numberOfAnimals = 0;
+            deleteIndexOfAnimal = 0;
+        }
+
+        void showAnimals(){
+            cout << endl << "====================================================================================================" << endl <<"| " ;
+            printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
+            cout << endl << "====================================================================================================" << endl;
+
+            for (short j = 0; j < numberOfAnimals; j++ ){
+                arrayAnimals[j].show();
+            }
+        }
+
+        void addAnimal(){
+            arrayAnimals[numberOfAnimals].add();
+            numberOfAnimals++;
+        }
+
+        void deleteAnimal(){
+            cout<<"Which animal you want to delete? Select its index"<<endl;
+            cin >> deleteIndexOfAnimal;
+            Animal newArrayAnimals[50];
+            int j = 0;
+
+            for(int i = 0; i < numberOfAnimals; i++){
+                if (i != deleteIndexOfAnimal){
+                    newArrayAnimals[j] = arrayAnimals[i];
+                    j++;
+                }
+            }
+
+            numberOfAnimals--;
+            for (int i = 0; i < numberOfAnimals; i++){
+                arrayAnimals[i] = newArrayAnimals[i];
+            }
+        }
+};
+
+class Manager{
+    public:
+    int selector;
+        Zoo zooManager;
         void manager(){
             do{
-                cout << "1: Add animal \n" << "2: look information about animalslook animals\n" << "3: look animals\n" << "4: edit information\n" << "5: delete\n" << "6: Exit \n\n";
+                cout << "1: Add animal \n" << "2: Look information about animals\n" << "3: Delete animal\n" << "4: Exit \n\n";
 
                 do{
                     cout << "your choose:   " ;
                     cin >> selector ;
-                    if (selector < 1 || selector > 6){
+                    if (selector < 1 || selector > 4){
                         cout << "Wrong choose...Try again \n" << endl;
                     }
-                }while (selector < 1 || selector > 6);
+                }while (selector < 1 || selector > 4);
 
                 switch (selector){
                     case 1:
-                        i++ ;
-                        animals[i].addAnimal() ;
+                        zooManager.addAnimal();
                         break;
-
                     case 2:
-                        if (i == -1){
-                          cout << "There is nothing to show..." << endl ;
-                          break;
-                        }
-
-                        cout << endl << "====================================================================================================" << endl <<"| " ;
-                        printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
-                        cout << endl << "====================================================================================================" << endl;
-
-                        for (short j = 0; j <= i; j++ ){
-                            animals[j].showAnimals();
-                        }
+                        zooManager.showAnimals();
                         break;
-
                     case 3:
-                        if (i == -1){
-                            cout << "There is nothing to show..." << endl ;
-                            break;
-                        }
-
-                    for (int j = 0; j <= i; j++ ){
-                       cout << animals[j]._name << endl;
-                    }
-                    break;
-
-                    case 4:
-                        if (i == -1){
-                            cout << "There is nothing to edit..." << endl ;
-                            break;
-                        }
-
-                        cout << "What animal do you want edit(enter name): ";
-                        cin >> editAnimal;
-
-                        for (int j = 0; j <= i; j++ ){
-                            if(animals[j]._name == editAnimal){
-                                cout << endl << "====================================================================================================" << endl <<"| " ;
-                                printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
-                                cout << endl << "====================================================================================================" << endl;
-                                animals[j].showAnimals();
-                                animals[j].editInformationAboutAnimal();
-                            }
-                        }
-                        break;
-
-                    case 5:
-                        if (i == -1){
-                            cout << "There is nothing to delete..." << endl ;
-                            break;
-                        }
-
-                        cout << "What animal do you want delete(enter name): ";
-                        cin >> deleteAnimal;
-
-                        for (short j = 0; j <= i; j++ ){
-                            if(animals[j]._name == deleteAnimal){
-                                animals[j].deleteAnimal();
-                            }
-                        }
+                        zooManager.deleteAnimal();
                         break;
                 }
 
-            }while (selector != 6 );
+            }while (selector != 4);
         }
 };
 
 int main (){
-    Zoo zooManager;
-    zooManager.manager();
+    Manager m;
+    m.manager();
 }
 
