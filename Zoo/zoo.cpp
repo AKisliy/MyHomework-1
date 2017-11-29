@@ -5,8 +5,8 @@ using namespace std;
 
 class Animal{
     private:
-        string name;
-        string kind;
+        char* name;
+        char* kind;
         int age;
         int numberOfPaws;
         int health;
@@ -14,8 +14,8 @@ class Animal{
 
     public:
         Animal (){
-            name = " ";
-            kind = " ";
+            name = new char[20];
+            kind = new char[20];
             age = 0;
             numberOfPaws = 0;
             health = 0;
@@ -49,23 +49,24 @@ class Animal{
             cout.width (11);
             cout << numberOfPaws << "   ||";
             cout.width (11);
-            cout << health << "   ||";
+            cout << health << "  ||";
             cout.width (11);
             if(isShow == 1){
-                cout<<"Animal at the show"<<endl;
+                cout<<"Animal at the show  |" << endl;
             }
             if(isShow == 0){
-                cout<<"Animal at the aviary"<<endl;
+                cout<<"Animal at the aviary  |" << endl;
             }
-            cout << endl << "====================================================================================================" << endl ;
+            cout << "===================================================================================================" << endl;
         }
 };
 
-class Zoo : public Animal{
+class Zoo{
     private:
         Animal arrayAnimals[50];
         int numberOfAnimals;
         int deleteIndexOfAnimal;
+        int editIndexOfAnimal;
     public:
         Zoo(){
             numberOfAnimals = 0;
@@ -73,69 +74,74 @@ class Zoo : public Animal{
         }
 
         void showAnimals(){
-            cout << endl << "====================================================================================================" << endl <<"| " ;
-            printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail  |");
-            cout << endl << "====================================================================================================" << endl;
+            cout << endl << "===================================================================================================" << endl <<"| " ;
+            printf("%15s%15s%15s%15s%15s%15s", "Animal name  ||" , "kind  ||", "age  ||" , "numberOfPaws  ||" , "health  ||", "exhibition or avail |");
+            cout << endl << "===================================================================================================" << endl;
 
-            for (short j = 0; j < numberOfAnimals; j++ ){
+            for (short j = 1; j <= numberOfAnimals; j++ ){
                 arrayAnimals[j].show();
             }
         }
 
         void addAnimal(){
-            arrayAnimals[numberOfAnimals].add();
             numberOfAnimals++;
+            arrayAnimals[numberOfAnimals].add();
         }
 
         void deleteAnimal(){
-            cout<<"Which animal you want to delete? Select its index"<<endl;
+            cout << "What animal do you want to delete? Select an index" << endl;
             cin >> deleteIndexOfAnimal;
-            Animal newArrayAnimals[50];
-            int j = 0;
-
-            for(int i = 0; i < numberOfAnimals; i++){
-                if (i != deleteIndexOfAnimal){
-                    newArrayAnimals[j] = arrayAnimals[i];
-                    j++;
+            if (deleteIndexOfAnimal <= numberOfAnimals) {
+                while (deleteIndexOfAnimal < numberOfAnimals) {
+                    arrayAnimals[deleteIndexOfAnimal] = arrayAnimals[deleteIndexOfAnimal + 1];
+                    deleteIndexOfAnimal++;
                 }
+                numberOfAnimals--;
             }
+        }
 
-            numberOfAnimals--;
-            for (int i = 0; i < numberOfAnimals; i++){
-                arrayAnimals[i] = newArrayAnimals[i];
-            }
+        void editAnimal(){
+            cout << "What animal do you want to edit? Select an index" << endl;
+            cin >> editIndexOfAnimal;
+            arrayAnimals[editIndexOfAnimal].add();
         }
 };
 
 class Manager{
     public:
-    int selector;
+        int selector;
         Zoo zooManager;
         void manager(){
             do{
-                cout << "1: Add animal \n" << "2: Look information about animals\n" << "3: Delete animal\n" << "4: Exit \n\n";
+                cout << "1: Add animal \n" << "2: Look information about animals\n" << "3: Edit animal\n" << "4: Delete animal\n" << "5: Exit \n\n";
 
                 do{
                     cout << "your choose:   " ;
                     cin >> selector ;
-                    if (selector < 1 || selector > 4){
+                    if (selector < 1 || selector > 5){
                         cout << "Wrong choose...Try again \n" << endl;
                     }
-                }while (selector < 1 || selector > 4);
+                }while (selector < 1 || selector > 5);
 
                 switch (selector){
                     case 1:
                         zooManager.addAnimal();
                         break;
+
                     case 2:
                         zooManager.showAnimals();
                         break;
+
                     case 3:
+                        zooManager.editAnimal();
+                        break;
+
+                    case 4:
                         zooManager.deleteAnimal();
                         break;
                 }
 
-            }while (selector != 4);
+            }while (selector != 5);
         }
 };
 
