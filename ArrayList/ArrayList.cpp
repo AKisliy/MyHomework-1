@@ -17,7 +17,7 @@ public:
     }
   
     void addToList(int item) {
-        if(size < allocSize) {
+        if(size <= allocSize) {
             array[size] = item;
             size++;
         } else {
@@ -33,20 +33,37 @@ public:
             array[size] = item;
             size++;
         }
+        cout << size << " ";
+        cout << endl;
     }
     
     void setToList(int index, int item) {
-        if(size < allocSize) {
+        if(size == allocSize){
+            int* newArray = new int[allocSize * 2];
+            allocSize = allocSize * 2;
+            
+            for(int i = 0; i < size; i++) {
+                newArray[i] = array[i];
+            }
+            
+            delete array;
+            array = newArray;
+        }
+        
+        if(index <= size){
             size++;
             for(int i = size - 1; i != index - 1; i--) {
                 array[i] = array[i - 1];
             }
             array[index] = item;
-        }
+        }              
     }
     
     int get(int index) {
-        cout << array[index] << endl;
+        if(index < 0 || index > size){
+                cout << "Error! Index not found" << endl;
+            } else cout << array[index] << endl;
+        
         return array[index];
     }
            
@@ -70,11 +87,7 @@ public:
         delete array;
         array = newArray;
         
-        for(int i = 0; i < size; i++) {
-            cout << newArray[i];
-            cout << " ";
-        }
-        cout << endl;
+        allocSize = size;
     }
 
     void displayTheList() {
@@ -91,16 +104,20 @@ int main() {
     list->addToList(0);
     list->addToList(1);
     list->addToList(2);   
-    list->addToList(3);   
+    list->addToList(3);
     list->addToList(4);
     list->addToList(5);
     list->addToList(6);
     list->displayTheList();
-    list->setToList(4,0);
+    list->setToList(0,1);
+    list->setToList(1,1);
+    list->setToList(2,1);
+    list->setToList(3,1);
     list->displayTheList();
-    list->get(6);
+    list->get(4);
     list->removeSelectedItem(4);
     list->displayTheList();
     list->trimToSize();
+    list->displayTheList();
     delete list;
 }
