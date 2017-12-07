@@ -7,82 +7,76 @@ using namespace std;
 
 #define SIZE_ARRAY 100
 
-void sortA(char* a){
-    int temp = 0;
-    int length = strlen(a);
-    bool exit = false;
+void sortA(char* stringOfA) {
+    char temp;
+    int length = strlen(stringOfA);
 
-    while (!exit){
-        exit = true;
-        if(a[0] == '-'){
-            for (int i = 1; i < length - 1; i++){
-                if(a[1] > a[2] && a[2] == '0'){
-                   for (int i = 3; i < length - 1; i++){
-                       if (a[i] > a[i + 1]){
-                           temp = a[i];
-                           a[i] = a[i + 1];
-                           a[i + 1] = temp;
-                           exit = false;
+    if(stringOfA[0] == '-') {                                                   // if the number is negative,
+        for (int i = length - 1; i >= 0; i--) {                                 // we begin sorting with
+            for (int j = 1; j < i; j++) {                                       // 1 element
+                if (stringOfA[1] > stringOfA[2] && stringOfA[2] == '0') {       // if 2 element '0', we begin sorting with
+                    for (j = 3; j < i; j++) {                                   // 3 element, so that                 
+                        if (stringOfA[j] > stringOfA[j + 1]) {                  // the sorted number does not begin with 0
+                            temp = stringOfA[j];
+                            stringOfA[j] = stringOfA[j + 1];
+                            stringOfA[j + 1] = temp;
                         }
-                   }
-                   break;
+                    }
+                    break;
                 }
 
-                if (a[i] > a[i + 1]){
-                    temp = a[i];
-                    a[i] = a[i + 1];
-                    a[i + 1] = temp;
-                    exit = false;
+                if (stringOfA[j] > stringOfA[j + 1]) {
+                    temp = stringOfA[j];
+                    stringOfA[j] = stringOfA[j + 1];
+                    stringOfA[j + 1] = temp;
                 }
             }
-        } else {
-            for (int i = 0; i < length - 1; i++){
-                if (a[i] < a[i + 1]){
-                    temp = a[i];
-                    a[i] = a[i + 1];
-                    a[i + 1] = temp;
-                    exit = false;
+        }
+    } else {
+        for (int i = length - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (stringOfA[j] < stringOfA[j + 1]) {
+                    temp = stringOfA[j];
+                    stringOfA[j] = stringOfA[j + 1];
+                    stringOfA[j + 1] = temp;
                 }
             }
         }
     }
 }
 
-void sortB(char* b){
-    int temp = 0;
-    int length = strlen(b);
-    bool exit = false;
+void sortB(char* stringOfB) {
+    char temp;
+    int length = strlen(stringOfB);
 
-    while (!exit){
-        exit = true;
-        if(b[0] == '-'){
-            for (int i = 1; i < length - 1; i++){
-                if (b[i] < b[i + 1]){
-                    temp = b[i];
-                    b[i] = b[i + 1];
-                    b[i + 1] = temp;
-                    exit = false;
+    if(stringOfB[0] == '-') {                                                   // if the number is negative,
+        for (int i = length - 1; i >= 0; i--) {                                 // we begin sorting with
+            for (int j = 1; j < i; j++) {                                       // 1 element
+                if (stringOfB[j] < stringOfB[j + 1]) {
+                    temp = stringOfB[j];
+                    stringOfB[j] = stringOfB[j + 1];
+                    stringOfB[j + 1] = temp;
                 }
             }
-        } else {
-            for (int i = 0; i < length - 1; i++){
-                if(b[0] > b[1] && b[1] == '0'){
-                   for (int i = 2; i < length - 1; i++){
-                       if (b[i] > b[i + 1]){
-                           temp = b[i];
-                           b[i] = b[i + 1];
-                           b[i + 1] = temp;
-                           exit = false;
+        }
+    } else {
+        for (int i = length - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if(stringOfB[0] > stringOfB[1] && stringOfB[1] == '0') {        // if 1 element '0', we begin sorting with
+                    for (j = 2; j < i; j++) {                                   // 2 element, so that
+                        if (stringOfB[j] > stringOfB[j + 1]) {                  // the sorted number does not begin with 0
+                           temp = stringOfB[j];
+                           stringOfB[j] = stringOfB[j + 1];
+                           stringOfB[j + 1] = temp;
                         }
-                   }
-                   break;
+                    }
+                    break;
                 }
 
-                if (b[i] > b[i + 1]){
-                    temp = b[i];
-                    b[i] = b[i + 1];
-                    b[i + 1] = temp;
-                    exit = false;
+                if (stringOfB[j] > stringOfB[j + 1]) {
+                    temp = stringOfB[j];
+                    stringOfB[j] = stringOfB[j + 1];
+                    stringOfB[j + 1] = temp;
                 }
             }
         }
@@ -90,26 +84,34 @@ void sortB(char* b){
 }
 
 int main() {
-    char* charA = new char[SIZE_ARRAY];
-    char* charB = new char[SIZE_ARRAY];
-    int intA = 0;
-    int intB = 0;
+    char* stringOfA = new char[SIZE_ARRAY];
+    char* stringOfB = new char[SIZE_ARRAY];
+    int intOfA = 0;
+    int intOfB = 0;
+    int result = 0;
+    
     cout << "Enter a: ";
-    cin >> charA;
+    cin >> stringOfA;
     cout << "Enter b: ";
-    cin >> charB;
+    cin >> stringOfB;
 
     cout << endl;
 
-    sortA(charA);
-    sortB(charB);
+    sortA(stringOfA);
+    sortB(stringOfB);
 
-    cout << charA << endl;
-    cout << charB << endl;
+    cout << stringOfA << endl;
+    cout << stringOfB << endl;
 
-    intA = atoi(charA);
-    intB = atoi(charB);
+    intOfA = atoi(stringOfA);
+    intOfB = atoi(stringOfB);
+    
+    result = intOfA - intOfB;
 
-    cout << (intA - intB) << endl;
+    cout << result << endl;
+    
+    delete stringOfA;
+    delete stringOfB;
+    
     return 0;
 }
