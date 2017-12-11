@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#define SIZE_ARRAY 100
+#define ARRAY_SIZE 100
 
 void swap(char* xp, char* yp){
     int temp = *xp;
@@ -13,42 +13,46 @@ void swap(char* xp, char* yp){
     *yp = temp;
 }
 
-void sortAscending(int lengthNumber, char* str){
-    for (int i = 0; i < lengthNumber; i++) {
-        for (int j = 0; j < lengthNumber - i; j++) {
-            if (str[j] < str[j + 1]) {
-                swap(&str[j], &str[j + 1]);
-            }
-        }
-    }
-}
-
-void sortDescending(int lengthNumber, char* str){
+void sort(int lengthNumber, char* str, char number){
     for (int i = lengthNumber - 1; i >= 0; i--) {
         for (int j = 0; j < i; j++) {
-            if (str[j] > str[j + 1]) {
-                swap(&str[j], &str[j + 1]);
+            switch (number) {
+            case 'A':
+                if (str[j] < str[j + 1]) {
+                    swap(&str[j], &str[j + 1]);
+                }
+                break;
+            case 'B':
+                if (str[j] > str[j + 1]) {
+                    swap(&str[j], &str[j + 1]);
+                }
+                break;
+            default:
+                break;
             }
+
         }
     }
 }
 
-void sortNegativeNumberB(int lengthNumber, char* str){
-    for (int i = 0; i < lengthNumber; i++) {
-        for (int j = 1; j < lengthNumber - i; j++) {
-            if (str[j] < str[j + 1]) {
-                swap(&str[j], &str[j + 1]);
-            }
-        }
-    }
-}
-
-void sortNegativeNumberA(int lengthNumber, char* str){
+void sortNegativeNumber(int lengthNumber, char* str, char number){
     for (int i = lengthNumber - 1; i >= 0; i--) {
         for (int j = 1; j < i; j++) {
-            if (str[j] > str[j + 1]) {
-                swap(&str[j], &str[j + 1]);
+            switch (number) {
+            case 'B':
+                if (str[j] < str[j + 1]) {
+                    swap(&str[j], &str[j + 1]);
+                }
+                break;
+            case 'A':
+                if (str[j] > str[j + 1]) {
+                    swap(&str[j], &str[j + 1]);
+                }
+                break;
+            default:
+                break;
             }
+
         }
     }
 }
@@ -61,11 +65,11 @@ void sortA(char* stringOfNumberA) {
      * if the number negatively calls a function that sorts the number without the minus sign
      */
     if(stringOfNumberA[0] == '-') {
-        sortNegativeNumberA(lengthNumber, stringOfNumberA);
+        sortNegativeNumber(lengthNumber, stringOfNumberA, 'A');
         return;
     }
 
-    sortAscending(lengthNumber, stringOfNumberA);
+    sort(lengthNumber, stringOfNumberA, 'A');
 
 }
 
@@ -77,18 +81,18 @@ void sortB(char* stringOfNumberB) {
      * if the number negatively calls a function that sorts the number without the minus sign
      */
     if(stringOfNumberB[0] == '-') {
-        sortNegativeNumberB(lengthNumber, stringOfNumberB);
+        sortNegativeNumber(lengthNumber, stringOfNumberB, 'B');
         return;
     }
 
-    sortDescending(lengthNumber, stringOfNumberB);
+    sort(lengthNumber, stringOfNumberB, 'B');
 }
 
 int main() {
-    char* stringOfNumberA = new char[SIZE_ARRAY];
-    char* stringOfNumberB = new char[SIZE_ARRAY];
-    int numberOfA = 0;
-    int numberOfB = 0;
+    char* stringOfNumberA = new char[ARRAY_SIZE];
+    char* stringOfNumberB = new char[ARRAY_SIZE];
+    int numberA = 0;
+    int numberB = 0;
     int result = 0;
 
     cout << "Enter A: ";
@@ -104,10 +108,10 @@ int main() {
     cout << stringOfNumberA << endl;
     cout << stringOfNumberB << endl;
 
-    numberOfA = atoi(stringOfNumberA);
-    numberOfB = atoi(stringOfNumberB);
+    numberA = atoi(stringOfNumberA);
+    numberB = atoi(stringOfNumberB);
 
-    result = numberOfA - numberOfB;
+    result = numberA - numberB;
 
     cout << result << endl;
 
